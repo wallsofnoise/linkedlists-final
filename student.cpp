@@ -9,6 +9,11 @@ Student::Student(char* newFirstName, char* newLastName, int newID, float newGPA)
   GPA = newGPA;
 }
 
+Student::~Student() {
+  delete firstName;
+  delete lastName;
+}
+
 char* Student::getFirstName() { // return student's first name
   return firstName;
 }

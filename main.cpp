@@ -69,7 +69,79 @@ int main() { // main method
 
 void ADD(Node* &head) { // add function
   // test:
-  cout << "this function can be called." << endl;
+  // cout << "this function can be called." << endl;
+
+  // creates variables for student inputs
+  char* inputFirstName = new char[20];
+  char* inputLastName = new char[20];
+  int inputID;
+  float inputGPA;
+  
+  // prompt for first name input
+  cout << "please input student's first name:" << endl;
+  cin.getline(inputFirstName,20);
+  // prompt for last name input
+  cout << "please input student's last name:" << endl;
+  cin.getline(inputLastName,20);
+  // prompt for ID input
+  cout << "please input student's ID:" << endl;
+  cin >> inputID;
+  cin.get();
+  // prompt for GPA input
+  cout << "please input student's GPA:" << endl;
+  cin >> inputGPA;
+  cin.get();
+
+  // create new student
+  Student* s = new Student(inputFirstName,inputLastName,inputID,inputGPA);
+
+  // create new node using the student
+  Node* n = new Node(s);
+  
+  // create var to track current and previous nodes, starting at the head
+  Node* current = head;
+  Node* previous = head;
+  
+  if (current == NULL) { // if the head node does not exist
+    // make the node containing this student the head
+    head = n;
+  }
+  else { // if the head node is already full
+    while (current != NULL) { // while the current node still exists
+      if (n->getStudent()->getID() < head->getStudent()->getID()) { // if current student's ID is less than current head
+	// make n's next node the current head node
+	n->setNext(head);
+	// make n the new head node
+	head = n;
+	// break loop, no need to continue
+	break;
+	// this should successfully add our node to the beginning of the list
+      }
+      else { // if we make it past the head node
+	// move current to be next node in list
+	current = current->getNext();
+	if (current == NULL) { // if current is now a non-existent node, we've reached the end of the list
+	  // set the previous node's next node to be our new inputted student
+	  previous->setNext(n);
+	  // break loop, no need to continue
+	  break;
+	  // this should successfully tack our new node onto the end of the list
+	}
+	else if (n->getStudent()->getID() < current->getStudent()->getID()) { // if the current node still exists, and our new node's ID is less than it's ID
+	  // set the previous node's next node to be our new inputted student
+	  previous->setNext(n);
+	  // set our new inputted student's next node to be the current node
+	  n->setNext(current);
+	  // break loop, no need to continue
+	  break;
+	  // this should successfully insert our new node in betwen the previous and current nodes on the list
+	}
+	// if we make it all the way through, set the previous node to be the next node before running again
+	previous = previous->getNext();
+      }
+    }
+  }
+  
 }
 
 void PRINT(Node* next) { // print function

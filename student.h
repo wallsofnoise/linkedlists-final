@@ -9,6 +9,8 @@ class Student { // student class
  public:
   // constructor
   Student(char*,char*,int,float);
+  // destructor
+  ~Student();
   // function prototypes
   char* getFirstName(); // will return student's first name
   char* getLastName(); // will return student's last name
