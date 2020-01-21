@@ -215,7 +215,32 @@ void DELETE(Node* &head) { // delete function
 
 void AVERAGE(Node* head) { // average function
   // test:
-  cout << "this function can be called." << endl;
+  // cout << "this function can be called." << endl;
+
+  // create vars to track total students and total GPA
+  float totalStudents = 0;
+  float totalGPA = 0;
+
+  // create var to track current node, starting at the head
+  Node* current = head;
+
+  while (current != NULL) { // while we haven't reached the end of the list
+    // get the current GPA and add it to the total
+    totalGPA = totalGPA + current->getStudent()->getGPA();
+    // cout << totalGPA;
+    // add one to the total student count
+    totalStudents++;
+    // cout << totalStudents;
+    // move to the next node
+    current = current->getNext();
+  }
+
+  // after we've gone through the whole list, calculate an average by dividing total GPA by total students
+  float avgGPA = totalGPA / totalStudents;
+
+  // print the average GPA
+  cout << "average GPA: " << avgGPA << endl;
+  
 }
 
 void QUIT(bool &programRunning) { // quit function
