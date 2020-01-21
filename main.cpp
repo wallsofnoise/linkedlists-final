@@ -121,6 +121,7 @@ void ADD(Node* &head) { // add function
       else { // if we make it past the head node
 	// move current to be next node in list
 	current = current->getNext();
+
 	if (current == NULL) { // if current is now a non-existent node, we've reached the end of the list
 	  // set the previous node's next node to be our new inputted student
 	  previous->setNext(n);
@@ -164,7 +165,52 @@ void PRINT(Node* next, Node* head) { // print function
 
 void DELETE(Node* &head) { // delete function
   // test:
-  cout << "this function can be called." << endl;
+  // cout << "this function can be called." << endl;
+
+  // create variable for ID input
+  int deleteID;
+
+  // prompt for ID input
+  cout << "enter the ID of the student you'd like to delete:" << endl;
+  cin >> deleteID;
+  cin.get();
+
+  // create var to track current and previous nodes, starting at the head
+  Node* previous = head;
+  Node* current = head;
+
+  while (current != NULL) { // while the current node still exists
+    if (deleteID == head->getStudent()->getID()) { // if the ID for deletion is equal to the head's ID
+      // set the next node to be the new head
+      head = current->getNext();
+      // delete current (the old head)
+      delete current;
+      // break loop, no need to continue
+      break;
+    }
+    else { // if we make it past the head node
+      // set current to be next node in the list
+      current = current->getNext();
+      
+      if (current == NULL) { // if the current node is now non-existent, we've reached the end of the list
+	// inform the user that no IDs matched their search
+	cout << "no students had that ID." << endl;
+	// break loop, no need to continue
+	break;
+      }
+      else if (deleteID == current->getStudent()->getID()) { // if the ID for deletion is equal to the current student node's ID
+	// set the previous node's next node to be the node after the current node
+	previous->setNext(current->getNext());
+	// delete the current node
+	delete current;
+	// break loop, no need to continue
+	break;
+      }
+    }
+    // if we make it all the way through, set previous node to be next node before running again
+    previous = previous->getNext();
+  }
+  
 }
 
 void AVERAGE(Node* head) { // average function
