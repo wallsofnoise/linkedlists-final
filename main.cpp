@@ -1,4 +1,5 @@
-#include <iostream>
+#include <iostream> // for cout/cin
+#include <iomanip> // for setprecision
 #include <string.h> // for strcpy() and strcmp()
 #include "student.h" // allow access to student class
 #include "node.h" // allow access to node class
@@ -11,7 +12,7 @@ using namespace std;
 
 // function prototypes
 void ADD(Node* &head); // add node to list
-void PRINT(Node* next); // print list
+void PRINT(Node* next, Node* head); // print list
 void DELETE(Node* &head); // delete node from list
 void AVERAGE(Node* head); // average GPAs of students in list
 void QUIT(bool &programRunning); // quit program
@@ -50,7 +51,7 @@ int main() { // main method
       ADD(head);
     }
     else if (strcmp(calledFunction,printF) == 0) { // if called, perform PRINT function
-      PRINT(head);
+      PRINT(head, head);
     }
     else if (strcmp(calledFunction,deleteF) == 0) { // if called, perform DELETE function
       DELETE(head);
@@ -144,9 +145,21 @@ void ADD(Node* &head) { // add function
   
 }
 
-void PRINT(Node* next) { // print function
+void PRINT(Node* next, Node* head) { // print function
   // test:
-  cout << "this function can be called." << endl;
+  // cout << "this function can be called." << endl;
+
+  if (next == head) { // if we are at the beginning of the list
+    // print a header for the list
+    cout << "student data stored:" << endl;
+  }
+  if (next != NULL) { // if we haven't reached the end of the list
+    // print the current student's information
+    cout << fixed << setprecision(2) << next->getStudent()->getFirstName() << " " << next->getStudent()->getLastName() << ", " << next->getStudent()->getID() << ", " << next->getStudent()->getGPA() << endl;
+    // call print function on the next entry in the list
+    PRINT(next->getNext(), head);
+  }
+  
 }
 
 void DELETE(Node* &head) { // delete function
